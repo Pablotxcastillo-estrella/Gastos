@@ -1,0 +1,373 @@
+:root{
+  --paper: #F6F5F0;
+  --paper-line: #DAD4C2;
+  --ink: #1E2A26;
+  --ink-soft: #5B6A63;
+  --green: #2F6F4E;
+  --green-bg: #E7F0EA;
+  --red: #A8442C;
+  --red-bg: #F5E7E2;
+  --gold: #B8912B;
+  --focus: #1E2A26;
+  --radius: 4px;
+  --maxw: 880px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #1B2320;
+    --paper-line: #38433D;
+    --ink: #EDEBE3;
+    --ink-soft: #A6AEA8;
+    --green: #6FBF8F;
+    --green-bg: #24352C;
+    --red: #E08468;
+    --red-bg: #3A2620;
+    --gold: #D8B65A;
+  }
+}
+:root[data-theme="dark"]{
+  --paper: #1B2320;
+  --paper-line: #38433D;
+  --ink: #EDEBE3;
+  --ink-soft: #A6AEA8;
+  --green: #6FBF8F;
+  --green-bg: #24352C;
+  --red: #E08468;
+  --red-bg: #3A2620;
+  --gold: #D8B65A;
+}
+
+*{ box-sizing: border-box; }
+html{
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+body{
+  margin:0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  min-height: 100%;
+}
+h1,h2,h3{
+  font-family: 'Source Serif 4', serif;
+  font-weight: 600;
+  margin: 0;
+  color: var(--ink);
+}
+.wrap{
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+header.masthead{
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+header.masthead h1{
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  letter-spacing: 0.01em;
+}
+header.masthead p{
+  margin: 0.35rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+.today{
+  font-family: 'Source Serif 4', serif;
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  text-align: right;
+}
+
+/* Balance summary */
+.summary{
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+.summary > div{
+  padding: 1.25rem 1rem;
+  border-left: 1px solid var(--paper-line);
+}
+.summary > div:first-child{ border-left: none; }
+.summary .label{
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  margin: 0 0 0.35rem;
+}
+.summary .value{
+  font-family: 'Source Serif 4', serif;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 4vw, 1.9rem);
+  line-height: 1;
+}
+.summary .balance .value{ color: var(--ink); }
+.summary .income .value{ color: var(--green); }
+.summary .expense .value{ color: var(--red); }
+@media (max-width: 560px){
+  .summary{ grid-template-columns: 1fr; }
+  .summary > div{ border-left: none; border-top: 1px solid var(--paper-line); }
+  .summary > div:first-child{ border-top: none; }
+}
+
+/* Form */
+form#entry-form{
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+form#entry-form h2{
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+.form-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.9rem;
+}
+.field{
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.field.wide{ grid-column: span 2; }
+@media (max-width: 700px){
+  .form-grid{ grid-template-columns: repeat(2, 1fr); }
+  .field.wide{ grid-column: span 2; }
+}
+@media (max-width: 440px){
+  .form-grid{ grid-template-columns: 1fr; }
+  .field.wide{ grid-column: span 1; }
+}
+label{
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+input, select{
+  font: inherit;
+  padding: 0.55rem 0.6rem;
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+}
+input:focus-visible, select:focus-visible, button:focus-visible, [tabindex]:focus-visible{
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+fieldset{
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 0.6rem;
+}
+fieldset legend{
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  padding: 0;
+  margin-bottom: 0.3rem;
+}
+.type-choice{
+  flex: 1;
+  display: flex;
+}
+.type-choice input{
+  position: absolute;
+  opacity: 0;
+  width: 1px; height: 1px;
+}
+.type-choice label{
+  flex: 1;
+  text-align: center;
+  padding: 0.55rem 0.6rem;
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  cursor: pointer;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+.type-choice input:checked + label{
+  border-color: currentColor;
+}
+.type-choice.income input:checked + label{
+  background: var(--green-bg);
+  color: var(--green);
+  border-color: var(--green);
+}
+.type-choice.expense input:checked + label{
+  background: var(--red-bg);
+  color: var(--red);
+  border-color: var(--red);
+}
+.type-choice input:focus-visible + label{
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.form-actions{
+  margin-top: 1.1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+button{
+  font: inherit;
+  cursor: pointer;
+}
+.btn-primary{
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 0.6rem 1.4rem;
+  font-weight: 500;
+}
+.btn-primary:hover{ opacity: 0.88; }
+#form-error{
+  color: var(--red);
+  font-size: 0.85rem;
+  margin-top: 0.6rem;
+  min-height: 1.2em;
+}
+
+/* Filters */
+.filters{
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.filters label{ color: var(--ink-soft); font-size: 0.85rem; }
+.filters select, .filters input[type="search"]{
+  padding: 0.4rem 0.55rem;
+  font-size: 0.9rem;
+}
+.filters input[type="search"]{ flex: 1; min-width: 140px; }
+
+/* Ledger table */
+section.ledger h2{
+  font-size: 1.1rem;
+  margin-bottom: 0.9rem;
+}
+.table-scroll{
+  overflow-x: auto;
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+}
+table{
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+}
+thead th{
+  text-align: left;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+  padding: 0.7rem 0.8rem;
+  border-bottom: 2px solid var(--ink);
+  white-space: nowrap;
+}
+thead th.num{ text-align: right; }
+tbody td{
+  padding: 0.65rem 0.8rem;
+  border-bottom: 1px solid var(--paper-line);
+  font-size: 0.92rem;
+  vertical-align: middle;
+}
+tbody tr:last-child td{ border-bottom: none; }
+tbody td.num{
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+tbody tr.income td.num{ color: var(--green); }
+tbody tr.expense td.num{ color: var(--red); }
+td.desc{ max-width: 220px; }
+.cat-tag{
+  display: inline-block;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  border: 1px solid var(--paper-line);
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+}
+.btn-delete{
+  background: none;
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  color: var(--ink-soft);
+  padding: 0.3rem 0.5rem;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+.btn-delete:hover{
+  border-color: var(--red);
+  color: var(--red);
+}
+.empty-state{
+  padding: 2.5rem 1rem;
+  text-align: center;
+  color: var(--ink-soft);
+}
+.empty-state p{ margin: 0.3rem 0 0; font-size: 0.9rem; }
+
+.visually-hidden{
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+  padding: 0;
+  margin: -1px;
+}
+
+#sr-status{
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+footer{
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--paper-line);
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.btn-text{
+  background: none;
+  border: none;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  padding: 0;
+  font-size: 0.82rem;
+}
+.btn-text:hover{ color: var(--red); }
+
+@media (prefers-reduced-motion: no-preference){
+  .summary .value{ transition: color 0.15s ease; }
+}

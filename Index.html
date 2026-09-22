@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+    
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Control  Administrativo PC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div>
+      <h1>Control  Administrativo PC</h1>
+      <p>Registra tus ingresos y egresos para ver tu balance en todo momento.</p>
+    </div>
+    <p class="today" id="today-label"></p>
+  </header>
+
+  <section class="summary" aria-label="Resumen de cuentas">
+    <div class="balance">
+      <p class="label">Balance actual</p>
+      <p class="value" id="balance-value">Q0.00</p>
+    </div>
+    <div class="income">
+      <p class="label">Ingresos totales</p>
+      <p class="value" id="income-value">Q0.00</p>
+    </div>
+    <div class="expense">
+      <p class="label">Egresos totales</p>
+      <p class="value" id="expense-value">Q0.00</p>
+    </div>
+  </section>
+
+  <form id="entry-form" novalidate>
+    <h2>Agregar movimiento</h2>
+    <div class="form-grid">
+      <div class="field wide">
+        <fieldset>
+          <legend>Tipo de movimiento</legend>
+          <div class="type-choice income">
+            <input type="radio" name="type" id="type-income" value="ingreso" checked>
+            <label for="type-income">Ingreso</label>
+          </div>
+          <div class="type-choice expense">
+            <input type="radio" name="type" id="type-expense" value="egreso">
+            <label for="type-expense">Egreso</label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="field wide">
+        <label for="desc">Descripción</label>
+        <input type="text" id="desc" name="desc" placeholder="Ej. Pago de renta, venta del día..." required>
+      </div>
+
+      <div class="field">
+        <label for="amount">Monto (Q)</label>
+        <input type="number" id="amount" name="amount" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00" required>
+      </div>
+
+      <div class="field">
+        <label for="date">Fecha</label>
+        <input type="date" id="date" name="date" required>
+      </div>
+
+      <div class="field wide">
+        <label for="category">Categoría</label>
+        <select id="category" name="category">
+          <option value="General">General</option>
+          <option value="Alimentación">Alimentación</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Vivienda">Vivienda</option>
+          <option value="Salud">Salud</option>
+          <option value="Educación">Educación</option>
+          <option value="Ocio">Ocio</option>
+          <option value="Salario">Salario</option>
+          <option value="Negocio">Negocio</option>
+          <option value="Otro">Particulares</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="form-error" role="alert"></div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary">Agregar movimiento</button>
+    </div>
+  </form>
+
+  <section class="ledger" aria-labelledby="ledger-heading">
+    <h2 id="ledger-heading">Movimientos</h2>
+
+    <div class="filters">
+      <label for="filter-type">Mostrar</label>
+      <select id="filter-type">
+        <option value="todos">Todos</option>
+        <option value="ingreso">Solo ingresos</option>
+        <option value="egreso">Solo egresos</option>
+      </select>
+
+      <label for="filter-search" class="visually-hidden">Buscar</label>
+      <input type="search" id="filter-search" placeholder="Buscar por descripción o categoría...">
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Categoría</th>
+            <th scope="col" class="num">Monto</th>
+            <th scope="col"><span class="visually-hidden">Acciones</span></th>
+          </tr>
+        </thead>
+        <tbody id="ledger-body"></tbody>
+      </table>
+      <div class="empty-state" id="empty-state" hidden>
+        <strong>Todavía no hay movimientos</strong>
+        <p>Agrega tu primer ingreso o egreso con el formulario de arriba.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span id="count-label">0 movimientos registrados</span>
+    <button type="button" class="btn-text" id="clear-all">Borrar todos los movimientos</button>
+  </footer>
+
+  <p id="sr-status" role="status" aria-live="polite"></p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
